@@ -1,4 +1,4 @@
-export default async (req: Request) => {
+export default async (req: Request, context: any) => {
   const auth = req.headers.get("authorization") || "";
   const expectedUser = Deno.env.get("BASIC_USER") || "user";
   const expectedPass = Deno.env.get("BASIC_PASS") || "pass";
@@ -18,6 +18,6 @@ export default async (req: Request) => {
     });
   }
 
-  // let the request pass through
-  return fetch(req);
+  // let the request pass through to static files
+  return context.next();
 };
